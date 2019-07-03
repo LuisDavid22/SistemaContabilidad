@@ -200,8 +200,6 @@
     <Compile Include="CuentaContable.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dtos\CuentaContableDto.cs" />
-    <Compile Include="Dtos\TipoCuentaDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -17,12 +17,7 @@ namespace SistemaContabilidad.Controllers.Api
     {
         private ContabilidadEntities db = new ContabilidadEntities();
 
-        public CuentaContableController()
-        {
-            // Add the following code
-            // problem will be solved
-            db.Configuration.ProxyCreationEnabled = false;
-        }
+   
         // GET: api/CuentaContable
         public IQueryable<dynamic> GetCuentaContable()
         {

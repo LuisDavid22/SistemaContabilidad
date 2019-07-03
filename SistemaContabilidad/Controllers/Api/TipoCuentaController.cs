@@ -17,22 +17,39 @@ namespace SistemaContabilidad.Controllers.Api
         private ContabilidadEntities db = new ContabilidadEntities();
 
         // GET: api/TipoCuenta
-        public IQueryable<TipoCuenta> GetTipoCuenta()
+        public IQueryable<dynamic> GetTipoCuenta()
         {
-            return db.TipoCuenta;
+            var TipoCuenta = db.TipoCuenta.Select(tipo => new
+ 
+                {
+                    id = tipo.idTipoCuenta,
+                    descripcion = tipo.Descripcion,
+                    origen = tipo.Origen,
+                    estado = tipo.Estado
+                }
+            );
+            return TipoCuenta;
         }
 
         // GET: api/TipoCuenta/5
         [ResponseType(typeof(TipoCuenta))]
         public IHttpActionResult GetTipoCuenta(int id)
         {
-            TipoCuenta tipoCuenta = db.TipoCuenta.Find(id);
-            if (tipoCuenta == null)
+            var TipoCuenta = db.TipoCuenta.Select(tipo => new
+
+                {
+                    id = tipo.idTipoCuenta,
+                    descripcion = tipo.Descripcion,
+                    origen = tipo.Origen,
+                    estado = tipo.Estado
+                }).FirstOrDefault(t => t.id == id);
+
+            if (TipoCuenta == null)
             {
                 return NotFound();
             }
 
-            return Ok(tipoCuenta);
+            return Ok(TipoCuenta);
         }
 
         // PUT: api/TipoCuenta/5
