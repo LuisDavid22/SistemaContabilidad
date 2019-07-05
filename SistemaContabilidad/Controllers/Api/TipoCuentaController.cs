@@ -22,10 +22,10 @@ namespace SistemaContabilidad.Controllers.Api
             var TipoCuenta = db.TipoCuenta.Select(tipo => new
  
                 {
-                    id = tipo.idTipoCuenta,
-                    descripcion = tipo.Descripcion,
-                    origen = tipo.Origen,
-                    estado = tipo.Estado
+                tipo.idTipoCuenta,
+                tipo.Descripcion,
+                 tipo.Origen,
+                 tipo.Estado
                 }
             );
             return TipoCuenta;
@@ -38,11 +38,11 @@ namespace SistemaContabilidad.Controllers.Api
             var TipoCuenta = db.TipoCuenta.Select(tipo => new
 
                 {
-                    id = tipo.idTipoCuenta,
-                    descripcion = tipo.Descripcion,
-                    origen = tipo.Origen,
-                    estado = tipo.Estado
-                }).FirstOrDefault(t => t.id == id);
+                  tipo.idTipoCuenta,
+                   tipo.Descripcion,
+                    tipo.Origen,
+                   tipo.Estado
+                }).FirstOrDefault(t => t.idTipoCuenta == id);
 
             if (TipoCuenta == null)
             {
@@ -84,7 +84,8 @@ namespace SistemaContabilidad.Controllers.Api
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            //return StatusCode(HttpStatusCode.Created);
+            return Ok("Nitido");
         }
 
         // POST: api/TipoCuenta

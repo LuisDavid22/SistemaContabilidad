@@ -67,7 +67,8 @@ namespace SistemaContabilidad.Controllers.Api
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            //return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Nitido");
         }
 
         // POST: api/Moneda

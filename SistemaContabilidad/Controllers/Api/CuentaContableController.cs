@@ -23,24 +23,27 @@ namespace SistemaContabilidad.Controllers.Api
         {
             var cuentaContable = db.CuentaContable.Select(cuenta => new
             {
-                id = cuenta.idCuentaContable,
-                descripcion = cuenta.Descripcion,
-                tipoCuenta =  new
+              cuenta.idCuentaContable,
+               cuenta.Descripcion,
+                idTipoCuenta = new
                 {
-                    id = cuenta.TipoCuenta.idTipoCuenta,
-                    descripcion = cuenta.TipoCuenta.Descripcion,
-                    origen = cuenta.TipoCuenta.Origen,
-                    estado = cuenta.TipoCuenta.Estado
+                   cuenta.TipoCuenta.idTipoCuenta,
+                     cuenta.TipoCuenta.Descripcion,
+                    cuenta.TipoCuenta.Origen,
+                     cuenta.TipoCuenta.Estado
                 },
-                transacciones = cuenta.PermiteTrans,
-                nivel = cuenta.Nivel,
-                cuentaMayor = cuenta.CuentaContable2 == null? null: new
+                 cuenta.PermiteTrans,
+                CtaMayor = cuenta.CuentaContable2 == null ? null : new
                 {
-                    id = (int?)cuenta.CuentaContable2.idCuentaContable,
-                    descripcion = cuenta.CuentaContable2.Descripcion
+                    IdCuentaContable = (int?)cuenta.CuentaContable2.idCuentaContable,
+                   cuenta.CuentaContable2.Descripcion
                 },
-                balance = cuenta.Balance,
-                estado = cuenta.Estado
+                cuenta.Balance,
+                cuenta.Estado,
+                cuenta.Nivel
+                 
+               
+                                   
             });
 
        
@@ -68,21 +71,21 @@ namespace SistemaContabilidad.Controllers.Api
         {
             var cuentaContable = db.CuentaContable.Select(cuenta => new
             {
-                id = cuenta.idCuentaContable,
-                descripcion = cuenta.Descripcion,
-                tipoCuenta = new
+                cuenta.idCuentaContable,
+              cuenta.Descripcion,
+                IdTipoCuenta = new
                 {
-                    id = cuenta.TipoCuenta.idTipoCuenta,
-                    descripcion = cuenta.TipoCuenta.Descripcion,
-                    origen = cuenta.TipoCuenta.Origen,
-                    estado = cuenta.TipoCuenta.Estado
+                    cuenta.TipoCuenta.idTipoCuenta,
+                     cuenta.TipoCuenta.Descripcion,
+                    cuenta.TipoCuenta.Origen,
+                     cuenta.TipoCuenta.Estado
                 },
-                transacciones = cuenta.PermiteTrans,
-                nivel = cuenta.Nivel,
-                cuentaMayor = cuenta.CuentaContable2 ,
-                balance = cuenta.Balance,
-                estado = cuenta.Estado
-            }).FirstOrDefault(c => c.id == id);
+                cuenta.PermiteTrans,
+                cuenta.Nivel,
+                CtaMayor = cuenta.CuentaContable2 ,
+                 cuenta.Balance,
+               cuenta.Estado
+            }).FirstOrDefault(c => c.idCuentaContable == id);
             if (cuentaContable == null)
             {
                 return NotFound();
@@ -123,7 +126,8 @@ namespace SistemaContabilidad.Controllers.Api
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            //return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Nitido");
         }
 
         // POST: api/CuentaContable
