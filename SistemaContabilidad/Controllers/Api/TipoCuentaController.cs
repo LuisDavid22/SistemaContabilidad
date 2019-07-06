@@ -97,6 +97,13 @@ namespace SistemaContabilidad.Controllers.Api
                 return BadRequest(ModelState);
             }
 
+        
+        int ultimoId = db.TipoCuenta.OrderByDescending(t => t.idTipoCuenta)
+                        .Select(t => t.idTipoCuenta)
+                        .First();
+
+        tipoCuenta.idTipoCuenta = ultimoId + 1;
+
             db.TipoCuenta.Add(tipoCuenta);
 
             try
