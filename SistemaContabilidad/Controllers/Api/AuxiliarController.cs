@@ -81,6 +81,12 @@ namespace SistemaContabilidad.Controllers.Api
                 return BadRequest(ModelState);
             }
 
+           int ultimoId = db.Auxiliar.OrderByDescending(a => a.idAuxiliar)
+                            .Select(a => a.idAuxiliar)
+                            .First();
+
+            auxiliar.idAuxiliar = ultimoId + 1;
+
             db.Auxiliar.Add(auxiliar);
 
             try
