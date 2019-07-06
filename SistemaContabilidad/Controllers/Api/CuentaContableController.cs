@@ -138,11 +138,11 @@ namespace SistemaContabilidad.Controllers.Api
             {
                 return BadRequest(ModelState);
             }
-            int ultimoId = db.CuentaContable.OrderByDescending(c => c.idCuentaContable)
-                            .Select(c => c.idCuentaContable)
-                            .First();
+            //int ultimoId = db.CuentaContable.OrderByDescending(c => c.idCuentaContable)
+            //                .Select(c => c.idCuentaContable)
+            //                .First();
 
-            cuentaContable.idCuentaContable = ultimoId + 1;
+            //cuentaContable.idCuentaContable = ultimoId + 1;
 
             db.CuentaContable.Add(cuentaContable);
 
