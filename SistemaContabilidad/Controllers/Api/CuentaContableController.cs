@@ -35,7 +35,7 @@ namespace SistemaContabilidad.Controllers.Api
                  cuenta.PermiteTrans,
                 CtaMayor = cuenta.CuentaContable2 == null ? null : new
                 {
-                    IdCuentaContable = (int?)cuenta.CuentaContable2.idCuentaContable,
+                    idCuentaContable = (int?)cuenta.CuentaContable2.idCuentaContable,
                    cuenta.CuentaContable2.Descripcion
                 },
                 cuenta.Balance,
@@ -73,7 +73,7 @@ namespace SistemaContabilidad.Controllers.Api
             {
                 cuenta.idCuentaContable,
               cuenta.Descripcion,
-                IdTipoCuenta = new
+                idTipoCuenta = new
                 {
                     cuenta.TipoCuenta.idTipoCuenta,
                      cuenta.TipoCuenta.Descripcion,
