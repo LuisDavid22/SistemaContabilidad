@@ -15,7 +15,7 @@ namespace SistemaContabilidad.Controllers.Api
 {
     public class TipoCuentaController : ApiController
     {
-        private ContabilidadEntities db = new ContabilidadEntities();
+        private ContabilidadEntities1 db = new ContabilidadEntities1();
 
         // GET: api/TipoCuenta
         public IQueryable<dynamic> GetTipoCuenta()

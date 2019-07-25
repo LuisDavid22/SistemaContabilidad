@@ -12,29 +12,22 @@ namespace SistemaContabilidad
     using System;
     using System.Collections.Generic;
     
-    public partial class CuentaContable
+    public partial class AsientoContable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CuentaContable()
+        public AsientoContable()
         {
             this.AsientoCuenta = new HashSet<AsientoCuenta>();
-            this.CuentaContable1 = new HashSet<CuentaContable>();
         }
     
-        public int idCuentaContable { get; set; }
+        public int idAsientoContable { get; set; }
         public string Descripcion { get; set; }
-        public int idTipoCuenta { get; set; }
-        public bool PermiteTrans { get; set; }
-        public int Nivel { get; set; }
-        public Nullable<int> CtaMayor { get; set; }
-        public Nullable<double> Balance { get; set; }
+        public int idAuxiliar { get; set; }
+        public System.DateTime Fecha { get; set; }
         public string Estado { get; set; }
     
+        public virtual Auxiliar Auxiliar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AsientoCuenta> AsientoCuenta { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CuentaContable> CuentaContable1 { get; set; }
-        public virtual CuentaContable CuentaContable2 { get; set; }
-        public virtual TipoCuenta TipoCuenta { get; set; }
     }
 }

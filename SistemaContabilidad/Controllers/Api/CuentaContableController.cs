@@ -15,7 +15,7 @@ namespace SistemaContabilidad.Controllers.Api
 {
     public class CuentaContableController : ApiController
     {
-        private ContabilidadEntities db = new ContabilidadEntities();
+        private ContabilidadEntities1 db = new ContabilidadEntities1();
 
    
         // GET: api/CuentaContable

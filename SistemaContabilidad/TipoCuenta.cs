@@ -19,17 +19,13 @@ namespace SistemaContabilidad
         {
             this.CuentaContable = new HashSet<CuentaContable>();
         }
-
-
+    
         public int idTipoCuenta { get; set; }
         public string Descripcion { get; set; }
         public string Origen { get; set; }
         public string Estado { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CuentaContable> CuentaContable { get; set; }
-
-
     }
-   
 }

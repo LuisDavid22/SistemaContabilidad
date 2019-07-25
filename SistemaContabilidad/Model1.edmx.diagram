@@ -4,13 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="579d8bf7fcb24c72a2553549ffff1099" Name="Diagram1">
-        <EntityTypeShape EntityType="ContabilidadModel.Auxiliar" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ContabilidadModel.CuentaContable" Width="1.5" PointX="3.375" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="ContabilidadModel.Moneda" Width="1.5" PointX="7.75" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ContabilidadModel.TipoCuenta" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <AssociationConnector Association="ContabilidadModel.FK__CuentaCon__idTip__2A4B4B5E" ManuallyRouted="false" />
-        <AssociationConnector Association="ContabilidadModel.fk_CuentaContable_idCuentaContable" ManuallyRouted="false" />
+      <Diagram DiagramId="f333b76900e0440ea996218b15237406" Name="Diagram1">
+        <EntityTypeShape EntityType="ContabilidadModel.AsientoContable" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContabilidadModel.AsientoCuenta" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContabilidadModel.Auxiliar" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContabilidadModel.CuentaContable" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContabilidadModel.Moneda" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ContabilidadModel.TipoCuenta" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="ContabilidadModel.FK__AsientoCo__idAux__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="ContabilidadModel.FK__AsientoCu__idAsi__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="ContabilidadModel.FK__AsientoCu__idCue__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="ContabilidadModel.FK__CuentaCon__CtaMa__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="ContabilidadModel.FK__CuentaCon__idTip__5070F446" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

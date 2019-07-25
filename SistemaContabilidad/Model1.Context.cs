@@ -13,10 +13,10 @@ namespace SistemaContabilidad
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ContabilidadEntities : DbContext
+    public partial class ContabilidadEntities1 : DbContext
     {
-        public ContabilidadEntities()
-            : base("name=ContabilidadEntities")
+        public ContabilidadEntities1()
+            : base("name=ContabilidadEntities1")
         {
         }
     
@@ -25,6 +25,8 @@ namespace SistemaContabilidad
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AsientoContable> AsientoContable { get; set; }
+        public virtual DbSet<AsientoCuenta> AsientoCuenta { get; set; }
         public virtual DbSet<Auxiliar> Auxiliar { get; set; }
         public virtual DbSet<CuentaContable> CuentaContable { get; set; }
         public virtual DbSet<Moneda> Moneda { get; set; }

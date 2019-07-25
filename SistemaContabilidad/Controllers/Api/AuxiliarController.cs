@@ -14,26 +14,38 @@ namespace SistemaContabilidad.Controllers.Api
 {
     public class AuxiliarController : ApiController
     {
-        private ContabilidadEntities db = new ContabilidadEntities();
+        private ContabilidadEntities1 db = new ContabilidadEntities1();
 
         // GET: api/Auxiliar
        
-        public IQueryable<Auxiliar> GetAuxiliar()
+        public IQueryable<dynamic> GetAuxiliar()
         {
-            return db.Auxiliar;
+            return db.Auxiliar.Select(auxiliar => new {
+                auxiliar.idAuxiliar,
+                auxiliar.Descripcion,
+                auxiliar.Activo
+
+            });
         }
 
         // GET: api/Auxiliar/5
         [ResponseType(typeof(Auxiliar))]
         public IHttpActionResult GetAuxiliar(int id)
         {
-            Auxiliar auxiliar = db.Auxiliar.Find(id);
-            if (auxiliar == null)
+            var Auxiliar = db.Auxiliar.Select(auxiliar => new
+            {
+                auxiliar.idAuxiliar,
+                auxiliar.Descripcion,
+                auxiliar.Activo
+
+            }).FirstOrDefault(a => a.idAuxiliar == id);
+
+            if (Auxiliar == null)
             {
                 return NotFound();
             }
 
-            return Ok(auxiliar);
+            return Ok(Auxiliar);
         }
 
         // PUT: api/Auxiliar/5
