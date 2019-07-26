@@ -84,12 +84,24 @@ namespace SistemaContabilidad.Controllers.Api
                 return BadRequest();
             }
 
-   
-           if (asientoContable.idAuxiliar == 0)
+            if (asientoContable.AsientoCuenta.Count == 0)
+            {
+                return BadRequest("Debe especificar las cuentas de este asiento");
+
+            }
+
+            if (asientoContable.idAuxiliar == 0)
             {
                 return BadRequest("Debe especificar el auxiliar que realiza este asiento");
             }
 
+            foreach (var cuenta in asientoContable.AsientoCuenta)
+            {
+                cuenta.idAsientoContable = asientoContable.idAsientoContable;
+            }
+
+            asientoContable.Estado = "Registrado";
+            asientoContable.Fecha = DateTime.Now;
             db.Entry(asientoContable).State = EntityState.Modified;
 
             try
