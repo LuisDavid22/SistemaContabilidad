@@ -19,30 +19,49 @@ namespace SistemaContabilidad.Controllers.Api
         // GET: api/AsientoContable
         public IQueryable<dynamic> GetAsientoContable()
         {
-            var AsientoContable = db.AsientoContable.Select(asiento => new
+           
+
+            var asientoContable = db.AsientoContable.Include(a => a.AsientoCuenta).Select(asiento => new
             {
-               idAsiento = asiento.idAsientoContable,
+                idAsiento = asiento.idAsientoContable,
                 asiento.Descripcion,
                 Auxiliar = asiento.idAuxiliar,
                 asiento.Fecha,
                 asiento.Estado,
-                Cuentas = db.AsientoCuenta.Include(c => c.CuentaContable).Select(cuenta => new
-                { id = cuenta.idCuentaContable,
-                  cuenta = cuenta.CuentaContable.Descripcion,
-                  tipo = cuenta.tipoMov,
-                  monto = cuenta.Monto
-                
-                }),
+                Cuentas = asiento.AsientoCuenta.Select(cuenta => new
+                {
+                    id = cuenta.idCuentaContable,
+                    cuenta = cuenta.CuentaContable.Descripcion,
+                    tipo = cuenta.tipoMov,
+                    monto = cuenta.Monto
+
+                }).ToList()
             });
 
-            return AsientoContable;
+            return asientoContable;
         }
 
         // GET: api/AsientoContable/5
         [ResponseType(typeof(AsientoContable))]
         public IHttpActionResult GetAsientoContable(int id)
         {
-            AsientoContable asientoContable = db.AsientoContable.Find(id);
+            var asientoContable = db.AsientoContable.Include(a => a.AsientoCuenta).Select(asiento => new
+            {
+                idAsiento = asiento.idAsientoContable,
+                asiento.Descripcion,
+                Auxiliar = asiento.idAuxiliar,
+                asiento.Fecha,
+                asiento.Estado,
+                Cuentas = asiento.AsientoCuenta.Select(cuenta => new
+                {
+                    id = cuenta.idCuentaContable,
+                    cuenta = cuenta.CuentaContable.Descripcion,
+                    tipo = cuenta.tipoMov,
+                    monto = cuenta.Monto
+
+                }).ToList()
+            }).FirstOrDefault(a => a.idAsiento == id);
+
             if (asientoContable == null)
             {
                 return NotFound();
@@ -63,6 +82,12 @@ namespace SistemaContabilidad.Controllers.Api
             if (id != asientoContable.idAsientoContable)
             {
                 return BadRequest();
+            }
+
+   
+           if (asientoContable.idAuxiliar == 0)
+            {
+                return BadRequest("Debe especificar el auxiliar que realiza este asiento");
             }
 
             db.Entry(asientoContable).State = EntityState.Modified;
@@ -92,8 +117,23 @@ namespace SistemaContabilidad.Controllers.Api
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest("Objeto invalido. Para mas información comuniquese con el administrador de la api. ");
             }
+
+            if (asientoContable.AsientoCuenta.Count == 0)
+            {
+                return BadRequest("Debe especificar las cuentas de este asiento");
+
+            }
+
+            if (asientoContable.idAuxiliar == 0)
+            {
+                return BadRequest("Debe especificar el auxiliar que realiza este asiento");
+            }
+
+
+            asientoContable.Fecha = DateTime.Now;
+            asientoContable.Estado = "Registrado";
 
             db.AsientoContable.Add(asientoContable);
 
@@ -113,7 +153,9 @@ namespace SistemaContabilidad.Controllers.Api
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = asientoContable.idAsientoContable }, asientoContable);
+            //return CreatedAtRoute("DefaultApi", new { id = asientoContable.idAsientoContable }, asientoContable);
+
+            return Ok("Asiento registrado sastifactoriamente");
         }
 
         // DELETE: api/AsientoContable/5
