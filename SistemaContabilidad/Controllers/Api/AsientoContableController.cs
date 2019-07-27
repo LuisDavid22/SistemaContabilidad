@@ -180,7 +180,7 @@ namespace SistemaContabilidad.Controllers.Api
 
             foreach (var cuenta in asientoContableDto.Cuentas)
             {
-                if (cuenta.tipo.ToLower() != "db" || cuenta.tipo.ToLower() != "cr" || cuenta.tipo == null)
+                if ((cuenta.tipo.ToLower() != "db" && cuenta.tipo.ToLower() != "cr") || cuenta.tipo == null)
                     return BadRequest("Cuentas invalidas. Para mas información comuniquese con el administrador de la api");
             }
 
