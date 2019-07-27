@@ -9,6 +9,7 @@
 
 namespace SistemaContabilidad
 {
+    using SistemaContabilidad.Models;
     using System;
     using System.Collections.Generic;
     
@@ -17,6 +18,7 @@ namespace SistemaContabilidad
         public int idAsientoContable { get; set; }
         public int idCuentaContable { get; set; }
         public double Monto { get; set; }
+      
         public string tipoMov { get; set; }
     
         public virtual AsientoContable AsientoContable { get; set; }

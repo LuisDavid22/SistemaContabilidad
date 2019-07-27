@@ -178,6 +178,12 @@ namespace SistemaContabilidad.Controllers.Api
                 asientoContableDto.Auxiliar = (int)Auxiliares.Contabilidad;
             }
 
+            foreach (var cuenta in asientoContableDto.Cuentas)
+            {
+                if (cuenta.tipo.ToLower() != "db" || cuenta.tipo.ToLower() != "db" || cuenta.tipo == null)
+                    return BadRequest("Cuentas invalidas. Para mas información comuniquese con el administrador de la api");
+            }
+
 
 
 
