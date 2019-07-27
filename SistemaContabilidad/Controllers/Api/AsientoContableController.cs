@@ -9,12 +9,26 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using SistemaContabilidad;
+using SistemaContabilidad.Dto;
+using SistemaContabilidad.Models;
 
 namespace SistemaContabilidad.Controllers.Api
 {
     public class AsientoContableController : ApiController
     {
         private ContabilidadEntities1 db = new ContabilidadEntities1();
+        public enum Auxiliares
+        {
+            Contabilidad = 1,
+            Nomina = 2,
+            Facturacion = 3,
+            Inventario = 4,
+            CuentasXCobrar = 5,
+            CuentasXPagar = 6,
+            Compras = 7,
+            ActivoFijos = 8,
+            Cheques = 9
+        }
 
         // GET: api/AsientoContable
         public IQueryable<dynamic> GetAsientoContable()
@@ -40,7 +54,8 @@ namespace SistemaContabilidad.Controllers.Api
 
             return asientoContable;
         }
-
+   
+     
         // GET: api/AsientoContable/5
         [ResponseType(typeof(AsientoContable))]
         public IHttpActionResult GetAsientoContable(int id)
@@ -72,36 +87,55 @@ namespace SistemaContabilidad.Controllers.Api
 
         // PUT: api/AsientoContable/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAsientoContable(int id, AsientoContable asientoContable)
+        public IHttpActionResult PutAsientoContable(int id, AsientoContableDto asientoContableDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != asientoContable.idAsientoContable)
+            if (id != asientoContableDto.idAsiento)
             {
                 return BadRequest();
             }
 
-            if (asientoContable.AsientoCuenta.Count == 0)
+            if (asientoContableDto.Cuentas.Count == 0)
             {
                 return BadRequest("Debe especificar las cuentas de este asiento");
 
             }
 
-            if (asientoContable.idAuxiliar == 0)
+            if (asientoContableDto.Auxiliar == 0)
             {
-                return BadRequest("Debe especificar el auxiliar que realiza este asiento");
+                asientoContableDto.Auxiliar = (int)Auxiliares.Contabilidad;
             }
 
-            foreach (var cuenta in asientoContable.AsientoCuenta)
-            {
-                cuenta.idAsientoContable = asientoContable.idAsientoContable;
-            }
 
-            asientoContable.Estado = "Registrado";
-            asientoContable.Fecha = DateTime.Now;
+            //foreach (var cuenta in asientoContableDto.Cuentas)
+            //{
+            //    cuenta.id = asientoContableDto.idAsiento;
+            //}
+
+            AsientoContable asientoContable = new AsientoContable
+            {
+                idAsientoContable = asientoContableDto.idAsiento,
+                Descripcion = asientoContableDto.Descripcion,
+                idAuxiliar = asientoContableDto.Auxiliar,
+                AsientoCuenta = asientoContableDto.Cuentas.Select(c => new AsientoCuenta
+                {
+                    idCuentaContable = c.id,
+                    idAsientoContable = asientoContableDto.idAsiento,
+                    Monto = c.monto,
+                    tipoMov = c.tipo
+                }).ToArray(),
+                Fecha = DateTime.Now,
+                Estado = "Registrado"
+
+            };
+
+
+
+
             db.Entry(asientoContable).State = EntityState.Modified;
 
             try
@@ -123,29 +157,44 @@ namespace SistemaContabilidad.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/AsientoContable
-        [ResponseType(typeof(AsientoContable))]
-        public IHttpActionResult PostAsientoContable(AsientoContable asientoContable)
+    
+    // POST: api/AsientoContable
+    [ResponseType(typeof(AsientoContable))]
+        public IHttpActionResult PostAsientoContable(AsientoContableDto asientoContableDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("Objeto invalido. Para mas información comuniquese con el administrador de la api. ");
             }
 
-            if (asientoContable.AsientoCuenta.Count == 0)
+            if (asientoContableDto.Cuentas.Count == 0)
             {
                 return BadRequest("Debe especificar las cuentas de este asiento");
 
             }
 
-            if (asientoContable.idAuxiliar == 0)
+            if (asientoContableDto.Auxiliar == 0)
             {
-                return BadRequest("Debe especificar el auxiliar que realiza este asiento");
+                asientoContableDto.Auxiliar = (int)Auxiliares.Contabilidad;
             }
 
 
-            asientoContable.Fecha = DateTime.Now;
-            asientoContable.Estado = "Registrado";
+
+
+            AsientoContable asientoContable = new AsientoContable
+            {
+                Descripcion = asientoContableDto.Descripcion,
+                idAuxiliar = asientoContableDto.Auxiliar,
+                AsientoCuenta = asientoContableDto.Cuentas.Select(c => new AsientoCuenta
+                {
+                    idCuentaContable = c.id,
+                    Monto = c.monto,
+                    tipoMov = c.tipo
+                }).ToArray(),
+                Fecha = DateTime.Now,
+            Estado = "Registrado"
+
+        };
 
             db.AsientoContable.Add(asientoContable);
 
