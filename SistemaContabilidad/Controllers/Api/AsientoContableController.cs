@@ -229,6 +229,8 @@ namespace SistemaContabilidad.Controllers.Api
                 return NotFound();
             }
 
+         
+
             db.AsientoContable.Remove(asientoContable);
             db.SaveChanges();
 
