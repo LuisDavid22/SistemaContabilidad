@@ -234,8 +234,13 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AsientoCuadradoValidation.cs" />
+    <Compile Include="Models\IdCuentaIgualesValidation.cs" />
+    <Compile Include="Models\IdAuxiliarValidoValidation.cs" />
+    <Compile Include="Models\IdCuentaValidoValidation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\TypeDbOrCrValidation.cs" />
     <Compile Include="Moneda.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -165,24 +165,26 @@ namespace SistemaContabilidad.Controllers.Api
             if (!ModelState.IsValid)
             {
                 return BadRequest("Objeto invalido. Para mas información comuniquese con el administrador de la api. ");
+              
+                
             }
 
-            if (asientoContableDto.Cuentas.Count == 0)
-            {
-                return BadRequest("Debe especificar las cuentas de este asiento");
+            //if (asientoContableDto.Cuentas.Count == 0)
+            //{
+            //    return BadRequest("Debe especificar las cuentas de este asiento");
 
-            }
+            //}
 
             if (asientoContableDto.Auxiliar == 0)
             {
                 asientoContableDto.Auxiliar = (int)Auxiliares.Contabilidad;
             }
 
-            foreach (var cuenta in asientoContableDto.Cuentas)
-            {
-                if ((cuenta.tipo.ToLower() != "db" && cuenta.tipo.ToLower() != "cr") || cuenta.tipo == null)
-                    return BadRequest("Cuentas invalidas. Para mas información comuniquese con el administrador de la api");
-            }
+            //foreach (var cuenta in asientoContableDto.Cuentas)
+            //{
+            //    if ((cuenta.tipo.ToLower() != "db" && cuenta.tipo.ToLower() != "cr") || cuenta.tipo == null)
+            //        return BadRequest("Cuentas invalidas. Para mas información comuniquese con el administrador de la api");
+            //}
 
 
 
