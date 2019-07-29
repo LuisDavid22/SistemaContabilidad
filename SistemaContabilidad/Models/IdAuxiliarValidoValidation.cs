@@ -17,6 +17,7 @@ namespace SistemaContabilidad.Models
         
 
             List<int> IdValidos = db.Auxiliar.Select(c => c.idAuxiliar).ToList();
+            IdValidos.Add(0);
 
             if (!IdValidos.Contains(asiento.Auxiliar))
             {
