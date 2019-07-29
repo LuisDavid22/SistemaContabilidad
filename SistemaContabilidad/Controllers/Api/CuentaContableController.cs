@@ -82,7 +82,11 @@ namespace SistemaContabilidad.Controllers.Api
                 },
                 cuenta.PermiteTrans,
                 cuenta.Nivel,
-                CtaMayor = cuenta.CuentaContable2 ,
+                CtaMayor = cuenta.CuentaContable2 == null ? null : new
+                {
+                    idCuentaContable = (int?)cuenta.CuentaContable2.idCuentaContable,
+                    cuenta.CuentaContable2.Descripcion
+                },
                  cuenta.Balance,
                cuenta.Estado
             }).FirstOrDefault(c => c.idCuentaContable == id);
@@ -145,6 +149,8 @@ namespace SistemaContabilidad.Controllers.Api
             //cuentaContable.idCuentaContable = ultimoId + 1;
 
             db.CuentaContable.Add(cuentaContable);
+            
+
 
             try
             {

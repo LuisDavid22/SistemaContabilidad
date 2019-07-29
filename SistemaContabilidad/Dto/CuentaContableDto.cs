@@ -15,6 +15,7 @@ namespace SistemaContabilidad.Dto
         public string cuenta { get; set; }
         [TypeDbOrCrValidation]
         public string tipo { get; set; }
+        [Range(1,double.MaxValue,ErrorMessage ="El monto de las cuentas debe ser mayor que cero")]
         public double monto { get; set; }
 
       
