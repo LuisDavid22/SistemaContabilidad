@@ -13,13 +13,21 @@ namespace SistemaContabilidad.Models
         {
             AsientoContableDto asiento =  (AsientoContableDto)validationContext.ObjectInstance;
 
-            foreach (var cuenta in asiento.Cuentas)
+            if (asiento.Cuentas != null)
             {
-                if(asiento.Cuentas.Where(c => c.id == cuenta.id).ToList().Count > 1)
+                foreach (var cuenta in asiento.Cuentas)
                 {
-                    return new ValidationResult("");
+                    if (asiento.Cuentas.Where(c => c.id == cuenta.id).ToList().Count > 1)
+                    {
+                        return new ValidationResult("");
+                    }
                 }
             }
+            else
+            {
+                return new ValidationResult("");
+            }
+           
 
             return ValidationResult.Success;
         }

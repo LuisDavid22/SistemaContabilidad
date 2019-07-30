@@ -15,22 +15,30 @@ namespace SistemaContabilidad.Models
 
             double TotalDebitos = 0;
             double TotalCreditos = 0;
-
-            foreach (var cuenta in asiento.Cuentas)
+            if (asiento.Cuentas != null)
             {
-                if (cuenta.tipo.ToLower() == "db")
+                foreach (var cuenta in asiento.Cuentas)
                 {
-                    TotalDebitos += cuenta.monto;
+                    if (cuenta.tipo.ToLower() == "db")
+                    {
+                        TotalDebitos += cuenta.monto;
+                    }
+                    else if (cuenta.tipo.ToLower() == "cr")
+                    {
+                        TotalCreditos += cuenta.monto;
+                    }
                 }
-                else if (cuenta.tipo.ToLower() == "cr")
+                if (TotalCreditos != TotalDebitos)
                 {
-                    TotalCreditos += cuenta.monto;
+                    return new ValidationResult("");
                 }
+         
             }
-            if (TotalCreditos != TotalDebitos)
+            else
             {
                 return new ValidationResult("");
             }
+
 
             return ValidationResult.Success;
         }
