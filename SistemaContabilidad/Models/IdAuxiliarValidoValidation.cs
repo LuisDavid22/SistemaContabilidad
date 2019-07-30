@@ -14,10 +14,8 @@ namespace SistemaContabilidad.Models
             AsientoContableDto asiento = (AsientoContableDto)validationContext.ObjectInstance;
             ContabilidadEntities1 db = new ContabilidadEntities1();
 
-        
-
             List<int> IdValidos = db.Auxiliar.Select(c => c.idAuxiliar).ToList();
-            IdValidos.Add(0);
+            IdValidos.Add(0);   
 
             if (!IdValidos.Contains(asiento.Auxiliar))
             {
