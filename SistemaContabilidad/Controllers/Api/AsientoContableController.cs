@@ -174,10 +174,6 @@ namespace SistemaContabilidad.Controllers.Api
             }
 
          
-
-
-
-
             AsientoContable asientoContable = new AsientoContable
             {
                 Descripcion = asientoContableDto.Descripcion,
@@ -193,13 +189,22 @@ namespace SistemaContabilidad.Controllers.Api
 
         };
 
+            //Refrescando balances
             db.AsientoContable.Add(asientoContable);
 
             foreach (var cuenta in asientoContable.AsientoCuenta)
             {
-                var cuentaContable = db.CuentaContable.Single(c => c.idCuentaContable == cuenta.idCuentaContable);
+                var cuentaContable = db.CuentaContable.Include(c => c.TipoCuenta).Single(c => c.idCuentaContable == cuenta.idCuentaContable);
 
-                cuentaContable.Balance += cuenta.Monto;
+                if (cuentaContable.TipoCuenta.Origen.ToLower() == "db")
+                {
+                    cuentaContable.Balance += (cuenta.tipoMov.ToLower() == "db") ?  cuenta.Monto : -cuenta.Monto;
+                }
+                else
+                {
+                    cuentaContable.Balance += (cuenta.tipoMov.ToLower() == "cr") ? cuenta.Monto : -cuenta.Monto;
+                }
+                //cuentaContable.Balance += cuenta.Monto;
             }
 
             try
