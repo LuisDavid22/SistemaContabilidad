@@ -52,7 +52,7 @@ namespace SistemaContabilidad.Controllers.Api
 
         // PUT: api/Moneda/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutMoneda(string id, Moneda moneda)
+        public async  Task<IHttpActionResult> PutMoneda(string id, Moneda moneda)
         {
             if (!ModelState.IsValid)
             {
@@ -63,6 +63,8 @@ namespace SistemaContabilidad.Controllers.Api
             {
                 return BadRequest();
             }
+
+            moneda.UltimaTasaCambiaria = await getTasaMonedaFromApi(moneda.idTipoMoneda);
 
             db.Entry(moneda).State = EntityState.Modified;
 
