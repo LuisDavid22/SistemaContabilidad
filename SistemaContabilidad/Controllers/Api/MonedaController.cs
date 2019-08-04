@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using SistemaContabilidad;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace SistemaContabilidad.Controllers.Api
 {
@@ -17,9 +14,27 @@ namespace SistemaContabilidad.Controllers.Api
         private ContabilidadEntities1 db = new ContabilidadEntities1();
 
         // GET: api/Moneda
-        public IQueryable<Moneda> GetMoneda()
+        public async Task<IQueryable<Moneda>> GetMoneda()
         {
-            return db.Moneda;
+            var Monedas =  db.Moneda;
+
+            try
+            {
+                foreach (var moneda in Monedas)
+                {
+                    moneda.UltimaTasaCambiaria = await getTasaMonedaFromApi(moneda.idTipoMoneda);
+           
+                }
+                db.SaveChanges();
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+            return Monedas;
         }
 
         // GET: api/Moneda/5
@@ -73,12 +88,14 @@ namespace SistemaContabilidad.Controllers.Api
 
         // POST: api/Moneda
         [ResponseType(typeof(Moneda))]
-        public IHttpActionResult PostMoneda(Moneda moneda)
+        public async Task<IHttpActionResult> PostMoneda(Moneda moneda)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            moneda.UltimaTasaCambiaria = await getTasaMonedaFromApi(moneda.idTipoMoneda);
 
             db.Moneda.Add(moneda);
 
@@ -90,7 +107,7 @@ namespace SistemaContabilidad.Controllers.Api
             {
                 if (MonedaExists(moneda.idTipoMoneda))
                 {
-                    return Conflict();
+                    return BadRequest("Esta moneda ya existe");
                 }
                 else
                 {
@@ -129,6 +146,43 @@ namespace SistemaContabilidad.Controllers.Api
         private bool MonedaExists(string id)
         {
             return db.Moneda.Count(e => e.idTipoMoneda == id) > 0;
+        }
+
+        private async Task<double> getTasaMonedaFromApi(string IdMoneda)
+        {
+            double Tasa = 0;
+
+            if (IdMoneda.ToLower() == "dop") return ++Tasa;
+         
+            try
+            {
+               
+                var httpClient = new HttpClient();
+                var json = await httpClient.GetStringAsync("https://sistemaweb20190730113624.azurewebsites.net/api/monedas/mostrar/" + IdMoneda);
+
+                if (json != null)
+                {
+                    MonedaEsquema Moneda = JsonConvert.DeserializeObject<MonedaEsquema>(json);
+
+                    Tasa = Moneda.tasa_cambiaria;
+                }
+
+
+                return Tasa;
+            }
+            catch (System.Exception)
+            {
+
+                return Tasa;
+            }
+           
+        }
+
+        class MonedaEsquema
+        {
+            public string moneda_id { get; set; }
+            public double tasa_cambiaria { get; set; }
+
         }
     }
 }
